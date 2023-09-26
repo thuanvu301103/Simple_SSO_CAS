@@ -42,6 +42,7 @@ if (!(userDB[email] && password === userDB[email].password)) {
 }
 ```
 * Note: email and password iss store in excel file ```controller/data.xlsx``` which will be read and stored in variable ```userDB```
+  
 1.2. If the validation failed, return to the User's page
 ```
 const { serviceURL } = req.query;
