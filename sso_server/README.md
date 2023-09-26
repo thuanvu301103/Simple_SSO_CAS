@@ -34,6 +34,7 @@ router.get("/verifytoken", controller.verifySsoToken);
 ```
 # ```controller/index.js```
 1. ```doLogin``` function: ```const doLogin = (req, res, next)```
+   
 1.1. Do the validation with email (username) and password
 ```
 const { email, password } = req.body;
