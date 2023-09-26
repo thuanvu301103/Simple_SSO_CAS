@@ -32,4 +32,26 @@ router
 ```
 router.get("/verifytoken", controller.verifySsoToken);
 ```
-# ```router/index.js```
+# ```controller/index.js```
+1. ```doLogin``` function: ```const doLogin = (req, res, next)```
+1.1. Do the validation with email and password
+```
+const { email, password } = req.body;
+if (!(userDB[email] && password === userDB[email].password)) {
+  return res.status(404).json({ message: "Invalid username and password" });
+}
+```
+* Note: email and password iss store in excel file ```controller/data.xlsx``` which will be read and stored in variable ```userDB```
+1.2. If the validation failed, return to the User's page
+```
+const { serviceURL } = req.query;
+const id = encodedId();
+req.session.user = id;
+sessionUser[id] = email;
+if (serviceURL == null) {
+  return res.redirect("/");
+}
+const url = new URL(serviceURL);
+const intrmid = encodedId();
+storeApplicationInCache(url.origin, id, intrmid);
+```
