@@ -20,8 +20,8 @@ app.use("/cas", router);
 ```
 # ```router/index.js```
 1. Whenever a user enter ```http://localhost:3010/cas/login```, server create 2 routes:
-1.1. A GET route that calls the ```login``` function from ```controller/index.js``` object when a GET request is made to ```/login```.
-1.2. A POST route that calls the ```doLogin``` function from ```controller/index.js``` object when a POST request is made to ```/login```.
+1.1. A GET route that calls the ```login``` function from ```controller/index.js``` object when a GET request is made to ```/login``` (login form other page not in server)
+1.2. A POST route that calls the ```doLogin``` function from ```controller/index.js``` object when a POST request is made to ```/login``` (login from main page of server)
 ```
 router
   .route("/login")
@@ -34,16 +34,16 @@ router.get("/verifytoken", controller.verifySsoToken);
 ```
 # ```controller/index.js```
 1. ```doLogin``` function: ```const doLogin = (req, res, next)```
-1.1. Do the validation with email and password
+1.1. Do the validation with email (username) and password
 ```
 const { email, password } = req.body;
 if (!(userDB[email] && password === userDB[email].password)) {
   return res.status(404).json({ message: "Invalid username and password" });
 }
 ```
-* Note: email and password iss store in excel file ```controller/data.xlsx``` which will be read and stored in variable ```userDB```
+* Note: email (username) and password iss store in excel file ```controller/data.xlsx``` which will be read and stored in variable ```userDB```
   
-1.2. If the validation failed, return to the User's page
+1.2. If the validation passed, redirect to the User's page
 ```
 const { serviceURL } = req.query;
 const id = encodedId();
@@ -56,3 +56,4 @@ const url = new URL(serviceURL);
 const intrmid = encodedId();
 storeApplicationInCache(url.origin, id, intrmid);
 ```
+2. ```login``` function: ```const login = (req, res, next)```: The req.query will have the redirect url where we need to redirect after successful login and with sso token. This can also be used to verify the origin from where the request has came in for the redirection
