@@ -1,4 +1,15 @@
-# What to customize?
+# What to be customized?
+- User's login data base (```controller/userDB.js```): usermame, password, userId and name
+- Allowed Origin URL (```controller/alloweOrigin.js```): URL and allowed (```true```/```false```)
+# How does it work?
+## User wants to login through main page
+- Enter main page ```http://localhost:3010``` and choose ```Login```
+- Enter ```username``` and ```password```
+- Click ```Submit```
+- After login, automaticall return to main page and get ```ssoToken```
+## User wants to login through outer page 
+- User must create ```session```
+
 # Path
 ## ```index.js```
 1. Run ```index.js```, initial ```app``` by running ```app.js```, the server run on localhost, port 3010.
@@ -76,3 +87,6 @@ return res.redirect(`${serviceURL}?ssoToken=${intrmid}`);
 - If ```serviceURL != null``` (user enter login page through outer page) then redirect to (origin) outer page
 
 2.3. If user have not logined yet (```req.session.user == null```) then run ejs render ```views/login.ejs``` and response wih HTML. The user will fill username (email) and password, then submit and send POST message to the server, which will run function ```doLogin```
+
+3. ```verifySsoToken``` function: ```const verifySsoToken```
+Return user information with authenticated ssoToken 
