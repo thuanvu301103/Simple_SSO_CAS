@@ -65,9 +65,7 @@ storeApplicationInCache(url.origin, id, intrmid);
 2.1. If ```serviceURL != null``` (user enter login page outer page), then check if that outer page is allowed to connect to login server, if not then return error
 
 2.2. If ```req.session.user != null``` (user have already logined), then:
-   
-   2.2.1. If ```serviceURL == null``` (user enter login page through main page) then redirect to main page
-   
-   2.2.2. If ```serviceURL != null``` (user enter login page through outer page) then redirect to (origin) outer page
+- If ```serviceURL == null``` (user enter login page through main page) then redirect to main page
+- If ```serviceURL != null``` (user enter login page through outer page) then redirect to (origin) outer page
 
 2.3. If user have not logined yet (```req.session.user == null```) then run ejs render ```views/login.ejs``` and response wih HTML. The user will fill username (email) and password, then submit and send POST message to the server, which will run function ```doLogin```
