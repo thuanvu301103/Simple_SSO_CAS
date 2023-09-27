@@ -1,7 +1,7 @@
 # ```index.js```
 1. Run ```index.js```, initial ```app``` by running ```app.js```, the server run on localhost, port 3010.
 # ```app.js```
-1. Whenever a user enters main page ```http://localhost:3010```, server create ```session``` and use ```ejs``` render to turn template into HTML to response user.
+. Whenever a user enters main page ```http://localhost:3010```, server create ```session``` (for user who login by enter main page) and use ```ejs``` render to turn template form ```views/index.ejs```into HTML to response user.
 ```
 app.use(
   session({
@@ -18,6 +18,9 @@ app.set("view engine", "ejs");
 ```
 app.use("/cas", router);
 ```
+# ```views/index.ejs``` 
+- First interface when user enter main page of login server (for user who want to login through main page)
+- Including link to ```http://localhost:3010/cas/login```
 # ```router/index.js```
 1. Whenever a user enter ```http://localhost:3010/cas/login```, server create 2 routes:
 1.1. A GET route that calls the ```login``` function from ```controller/index.js``` object when a GET request is made to ```/login``` (login form other page not in server)
@@ -34,7 +37,6 @@ router.get("/verifytoken", controller.verifySsoToken);
 ```
 # ```controller/index.js```
 1. ```doLogin``` function: ```const doLogin = (req, res, next)```
-   
 1.1. Do the validation with email (username) and password
 ```
 const { email, password } = req.body;
@@ -57,4 +59,9 @@ const url = new URL(serviceURL);
 const intrmid = encodedId();
 storeApplicationInCache(url.origin, id, intrmid);
 ```
-2. ```login``` function: ```const login = (req, res, next)```: The req.query will have the redirect url where we need to redirect after successful login and with sso token. This can also be used to verify the origin from where the request has came in for the redirection
+2. ```login``` function: ```const login = (req, res, next)```
+2.1. If ```serviceURL != null``` (user enter login page outer page), then check if that outer page is allowed to connect to login server, if not then return error
+2.2. If ```req.session.user != null``` (user have already logined), then:
+   2.2.1. If ```serviceURL == null``` (user enter login page through main page) then redirect to main page
+   2.2.2. If ```serviceURL != null``` (user enter login page through outer page) then redirect to (origin) outer page
+2.3. If user have not logined yet (```req.session.user == null```) then run ejs render ```views/login.ejs``` and response wih HTML. The user will fill username (email) and password, then submit and send POST message to the server, which will run function ```doLogin```
