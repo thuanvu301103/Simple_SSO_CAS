@@ -1,6 +1,8 @@
-# ```index.js```
+# What to customize?
+# Path
+## ```index.js```
 1. Run ```index.js```, initial ```app``` by running ```app.js```, the server run on localhost, port 3010.
-# ```app.js```
+## ```app.js```
 . Whenever a user enters main page ```http://localhost:3010```, server create ```session``` (for user who login by enter main page) and use ```ejs``` render to turn template form ```views/index.ejs```into HTML to response user.
 ```
 app.use(
@@ -18,10 +20,10 @@ app.set("view engine", "ejs");
 ```
 app.use("/cas", router);
 ```
-# ```views/index.ejs``` 
+## ```views/index.ejs``` 
 - First interface when user enter main page of login server (for user who want to login through main page)
 - Including link to ```http://localhost:3010/cas/login```
-# ```router/index.js```
+## ```router/index.js```
 1. Whenever a user enter ```http://localhost:3010/cas/login```, server create 2 routes:
 1.1. A GET route that calls the ```login``` function from ```controller/index.js``` object when a GET request is made to ```/login``` (login form other page not in server)
 1.2. A POST route that calls the ```doLogin``` function from ```controller/index.js``` object when a POST request is made to ```/login``` (login from main page of server)
@@ -35,7 +37,7 @@ router
 ```
 router.get("/verifytoken", controller.verifySsoToken);
 ```
-# ```controller/index.js```
+## ```controller/index.js```
 1. ```doLogin``` function: ```const doLogin = (req, res, next)```
 
 1.1. Do the validation with email (username) and password
@@ -47,7 +49,11 @@ if (!(userDB[email] && password === userDB[email].password)) {
 ```
 * Note: email (username) and password iss store in excel file ```controller/data.xlsx``` which will be read and stored in variable ```userDB```
   
-1.2. If the validation passed, redirect to the User's page
+1.2. If the validation passed, redirect to the User's page as in ```login``` function wwith response message include:
+
+- ```ssoToken```: used for other connection 
+- ```id```: user's id
+- ```name```: user's name
 ```
 const { serviceURL } = req.query;
 const id = encodedId();
@@ -59,10 +65,11 @@ if (serviceURL == null) {
 const url = new URL(serviceURL);
 const intrmid = encodedId();
 storeApplicationInCache(url.origin, id, intrmid);
+return res.redirect(`${serviceURL}?ssoToken=${intrmid}`);
 ```
 2. ```login``` function: ```const login = (req, res, next)```
 
-2.1. If ```serviceURL != null``` (user enter login page outer page), then check if that outer page is allowed to connect to login server, if not then return error
+2.1. If ```serviceURL != null``` (user enter login page outer page), then check if that outer page is allowed to connect to login server, if not then return error (the allowed URL list is in ```controller/alloweOrigin.js```)
 
 2.2. If ```req.session.user != null``` (user have already logined), then:
 - If ```serviceURL == null``` (user enter login page through main page) then redirect to main page
