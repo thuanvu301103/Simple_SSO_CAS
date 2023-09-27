@@ -37,6 +37,7 @@ router.get("/verifytoken", controller.verifySsoToken);
 ```
 # ```controller/index.js```
 1. ```doLogin``` function: ```const doLogin = (req, res, next)```
+
 1.1. Do the validation with email (username) and password
 ```
 const { email, password } = req.body;
@@ -60,8 +61,13 @@ const intrmid = encodedId();
 storeApplicationInCache(url.origin, id, intrmid);
 ```
 2. ```login``` function: ```const login = (req, res, next)```
+
 2.1. If ```serviceURL != null``` (user enter login page outer page), then check if that outer page is allowed to connect to login server, if not then return error
+
 2.2. If ```req.session.user != null``` (user have already logined), then:
+   
    2.2.1. If ```serviceURL == null``` (user enter login page through main page) then redirect to main page
+   
    2.2.2. If ```serviceURL != null``` (user enter login page through outer page) then redirect to (origin) outer page
+
 2.3. If user have not logined yet (```req.session.user == null```) then run ejs render ```views/login.ejs``` and response wih HTML. The user will fill username (email) and password, then submit and send POST message to the server, which will run function ```doLogin```
