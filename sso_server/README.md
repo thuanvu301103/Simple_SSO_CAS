@@ -36,8 +36,8 @@ app.use("/cas", router);
 - Including link to ```http://localhost:3010/cas/login```
 ## ```router/index.js```
 1. Whenever a user enter ```http://localhost:3010/cas/login```, server create 2 routes:
-1.1. A GET route that calls the ```login``` function from ```controller/index.js``` object when a GET request is made to ```/login``` (login form other page not in server)
-1.2. A POST route that calls the ```doLogin``` function from ```controller/index.js``` object when a POST request is made to ```/login``` (login from main page of server)
+1.1. A GET route that calls the ```login``` function from ```controller/index.js``` object when a GET request is made to ```/login``` (in form ```http://localhost:3010/cas/login?serviceURL=${redirectURL}```, ```redirectURL == null``` when user login from main page)
+1.2. A POST route that calls the ```doLogin``` function from ```controller/index.js``` object when a POST request is made to ```/login```
 ```
 router
   .route("/login")
