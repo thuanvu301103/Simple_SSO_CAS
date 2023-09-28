@@ -1,6 +1,7 @@
 # What to be customized?
 - User's login data base (```controller/userDB.js```): usermame, password, userId and name
 - Allowed Origin URL (```controller/alloweOrigin.js```): URL and allowed (```true```/```false```)
+- Add more functions in ```app.js```
 # How does it work?
 ## User wants to login through main page
 - Enter main page ```http://localhost:3010``` and choose ```Login```
