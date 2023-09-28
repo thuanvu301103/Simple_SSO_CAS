@@ -13,9 +13,9 @@
 # What should user-side know?
 # Path
 ## ```index.js```
-1. Run ```index.js```, initial ```app``` by running ```app.js```, the server run on localhost, port 3010.
+Run ```index.js```, initial ```app``` by running ```app.js```, the server run on localhost, port 3010.
 ## ```app.js```
-. Whenever a user enters main page ```http://localhost:3010```, server create ```session``` (for user who login by enter main page) and use ```ejs``` render to turn template form ```views/index.ejs```into HTML to response user.
+1. Whenever a user enters main page ```http://localhost:3010```, server create ```session``` (for user who login by enter main page) and use ```ejs``` render to turn template form ```views/index.ejs```into HTML to response user.
 ```
 app.use(
   session({
