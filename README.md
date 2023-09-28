@@ -1,6 +1,6 @@
 # Simple_SSO_CAS
 - A simple implementation of single sign-on (SSO) central authorization unit and client using Express.js
-- This implement is my customized version of [a link](https://github.com/ankur-anand/simple-sso). Please read documents from this link, which will give you mỏe information than mine
+- This implement is my customized version of [origin sso cas](https://github.com/ankur-anand/simple-sso). Please read documents from this link, which will give you mỏe information than mine
 ## Important
 - Both SSO server and cosumer server run on localhost
 + SSO server runs on ```http://localhost:3010```
