@@ -10,7 +10,7 @@
 - After login, automaticall return to main page and get ```ssoToken```
 ## User wants to login through outer page 
 - User must create ```session```
-
+# What should user-side know?
 # Path
 ## ```index.js```
 1. Run ```index.js```, initial ```app``` by running ```app.js```, the server run on localhost, port 3010.
